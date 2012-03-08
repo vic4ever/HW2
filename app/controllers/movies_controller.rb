@@ -38,4 +38,9 @@ class MoviesController < ApplicationController
     redirect_to movies_path
   end
 
+  def sort_by
+    criteria = params[:criteria].to_s
+    @movies = Movie.find(:all, :order => criteria)
+  end
+
 end
