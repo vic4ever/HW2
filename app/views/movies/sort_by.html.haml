@@ -4,9 +4,11 @@
 %table#movies
   %thead
     %tr
-      %th= link_to "Movie Title", {:controller=>'movies',:action=>'sort_by', :criteria => 'title'}, :id => 'title_header'
+      %th{ :class => ('hilite' if @criteria == 'title')}
+        = (link_to "Movie Title", {:controller=>'movies',:action=>'sort_by', :criteria => 'title'}, :id => 'title_header')
       %th Rating
-      %th= link_to "Release Date", {:controller =>'movies', :action=>'sort_by', :criteria =>'release_date'},:id =>'release_date_header'
+      %th{ :class => ('hilite' if @criteria == 'release_date')}
+        = link_to "Release Date", {:controller =>'movies', :action=>'sort_by', :criteria =>'release_date'},:id =>'release_date_header'
       %th More Info
   %tbody
     - @movies.each do |movie|

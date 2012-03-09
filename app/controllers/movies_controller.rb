@@ -39,8 +39,8 @@ class MoviesController < ApplicationController
   end
 
   def sort_by
-    criteria = params[:criteria].to_s
-    @movies = Movie.find(:all, :order => criteria)
+    @criteria = params[:criteria].to_s
+    @movies = Movie.find(:all, :order => @criteria)
   end
 
 end
