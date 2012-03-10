@@ -14,6 +14,8 @@ Rottenpotatoes::Application.routes.draw do
   #   resources :products
   resources :movies 
   match 'movies/sort_by/:criteria', :controller=>'movies', :action=>'sort_by', :as => 'sort_by'
+  #match 'movies?utf8=✓\&commit=Refresh', :controller=>'movies', :action=>'refresh', :as => 'refresh'
+  match 'commit=Refresh', :controller=>'movies', :action=>'refresh', :as => 'refresh'
   # Sample resource route with options:
   #   resources :products do
   #     member do

@@ -7,7 +7,10 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    #debugger
+    @all_ratings = Movie.get_all_ratings
+    #params[:ratings].keys
+    @movies = Movie.find(:all)
   end
 
   def new
@@ -41,6 +44,11 @@ class MoviesController < ApplicationController
   def sort_by
     @criteria = params[:criteria].to_s
     @movies = Movie.find(:all, :order => @criteria)
+  end
+  
+  def refresh
+    debugger
+    redirect_to movies_path
   end
 
 end
