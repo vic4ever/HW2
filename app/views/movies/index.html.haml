@@ -7,7 +7,7 @@
     - @all_ratings.each do |rating|
       = rating
       = check_box_tag "ratings[#{rating}]", value = '1', if @rates != nil and @rates.include?(rating) then true else false end
-    = submit_tag 'Refresh', :id => "rating_submit"
+    = submit_tag 'Refresh', :id => "ratings_submit"
   %thead
     %tr
       %th{ :class => ('hilite' if @criteria == 'title')}

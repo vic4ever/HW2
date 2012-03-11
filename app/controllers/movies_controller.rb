@@ -30,11 +30,12 @@ class MoviesController < ApplicationController
       end
     end
     
-    if @rates != nil
-      @movies = Movie.where(:rating => @rates.keys).order(@criteria)
-    else
-      @movies = Movie.find(:all, :order => @criteria)
+    if @rates == nil
+      @rates = {"G" => 1, "PG" => 1, "R" => 1, "PG-13" => 1}
     end
+    
+    @movies = Movie.where(:rating => @rates.keys).order(@criteria)
+    
     if params['commit']!=nil
       redirect_to :ratings => @rates, :sort_by => @criteria
     end
