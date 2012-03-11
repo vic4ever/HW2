@@ -7,10 +7,34 @@ class MoviesController < ApplicationController
   end
 
   def index
-    #debugger
     @all_ratings = Movie.get_all_ratings
-    #params[:ratings].keys
-    @movies = Movie.find(:all)
+    
+    #if params['commit'] == 'Refresh'
+    #end
+    #debugger
+    if params[:sort_by] == nil
+      @criteria = session[:criteria]
+    else
+      @criteria = params[:sort_by].to_s
+      if params['commit']== 'Refresh'
+        session[:criteria] = @criteria
+      end
+    end
+    
+    if params[:ratings] == nil
+      @rates = session[:rates]
+    else
+      @rates = params[:ratings]
+      if params['commit']== 'Refresh'
+        session[:rates] = @rates
+      end
+    end
+    
+    @movies = Movie.where(:rating => @rates.keys).order(@criteria)
+    if params['commit']!=nil
+      redirect_to :ratings => @rates, :sort_by => @criteria
+    end
+    
   end
 
   def new
@@ -20,7 +44,8 @@ class MoviesController < ApplicationController
   def create
     @movie = Movie.create!(params[:movie])
     flash[:notice] = "#{@movie.title} was successfully created."
-    redirect_to movies_path
+    #redirect_to movies_path
+    redirect_to :ratings => @rates, :sort_by => @criteria
   end
 
   def edit
@@ -38,17 +63,7 @@ class MoviesController < ApplicationController
     @movie = Movie.find(params[:id])
     @movie.destroy
     flash[:notice] = "Movie '#{@movie.title}' deleted."
-    redirect_to movies_path
-  end
-
-  def sort_by
-    @criteria = params[:criteria].to_s
-    @movies = Movie.find(:all, :order => @criteria)
+    redirect_to :ratings => @rates, :sort_by => @criteria
   end
   
-  def refresh
-    debugger
-    redirect_to movies_path
-  end
-
 end

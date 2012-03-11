@@ -6,13 +6,15 @@
     Include:
     - @all_ratings.each do |rating|
       = rating
-      = check_box_tag "ratings[#{rating}]"
-    = submit_tag 'Refresh', {:controller =>'movies', :action=>'refresh'}
+      = check_box_tag "ratings[#{rating}]", value = '1', if @rates != nil and @rates.include?(rating) then true else false end
+    = submit_tag 'Refresh', :id => "rating_submit"
   %thead
     %tr
-      %th= link_to "Movie Title", {:controller=>'movies',:action=>'sort_by', :criteria => 'title'}, :id => 'title_header'
+      %th{ :class => ('hilite' if @criteria == 'title')}
+        = link_to "Movie Title", {:sort_by => 'title'}, :id => 'title_header'
       %th Rating
-      %th= link_to "Release Date", {:controller =>'movies', :action=>'sort_by', :criteria =>'release_date'},:id =>'release_date_header'
+      %th{ :class => ('hilite' if @criteria == 'release_date')}
+        = link_to "Release Date", {:sort_by =>'release_date'},:id =>'release_date_header'
       %th More Info
   %tbody
     - @movies.each do |movie|
